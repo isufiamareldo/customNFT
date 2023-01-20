@@ -8,11 +8,16 @@
             <button onclick="getBlockNumber()">Get Block Number</button>
             <p id="blockNumber"></p> 
         </section>
-          <section>
-            <h4>Excercise 2</h4>
-            <button onclick="getBalanceOf()">Get Balance</button>
-            <p id="balanceOf"></p>
-          </section>
+		<section>
+		<h4>Excercise 2</h4>
+		<button onclick="getBalanceOf()">Get Balance</button>
+		<p id="balanceOf"></p>
+		</section>
+		<section>
+		<h4>Excercise 3</h4>
+		<button onclick="transfer()">Transfer</button>
+		<p id="transfer"></p>
+		</section>
 
       
       <script>
@@ -30,7 +35,7 @@
 
 
 
-        const minABI = 
+        const ABI = 
         [
         {
 		"inputs": [
@@ -50,20 +55,60 @@
 		],
 		"stateMutability": "view",
 		"type": "function"
-	}];
+		},
+		{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+	];
 
     function getBalanceOf(){
 		ethereum.enable().then(function(){
 			web3.eth.getAccounts().then(function(accounts) {
             var contractAddress = "0x5F40A25664FEc9f687d456c1aEDCA290F99406A8"; 
-            var contract = new web3.eth.Contract(minABI, contractAddress);
+            var contract = new web3.eth.Contract(ABI, contractAddress);
             contract.methods.balanceOf(accounts[0]).call().then(function(balance) {
                 document.getElementById("balanceOf").innerHTML = "Balance: " + balance;
             });
         });
-		})
-           
+		})  
     }
+
+	function transfer() {
+		
+
+		ethereum.enable().then(function(){
+			web3.eth.getAccounts().then(function(accounts) {
+				var contractAddress = "0x5F40A25664FEc9f687d456c1aEDCA290F99406A8"; 
+				var account="0x15433DA387451F9dE4565280C85506CB71aF9376";
+				var contract = new web3.eth.Contract(ABI, contractAddress);
+				contract.methods.transfer(account,1000).send({from: accounts[0]}).then(function() {
+					alert("transfer successful");
+				});
+        	});
+		})
+    }
+
 
 
 
