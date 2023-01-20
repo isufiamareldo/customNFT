@@ -52,15 +52,18 @@
 		"type": "function"
 	}];
 
-        function getBalanceOf(){
-            web3.eth.getAccounts().then(function(accounts) {
-          var contractAddress = 0x5F40A25664FEc9f687d456c1aEDCA290F99406A8; 
-          var contract = new web3.eth.Contract(minABI, contractAddress);
-          contract.methods.balanceOf(accounts[0]).call().then(function(balance) {
-            document.getElementById("balanceOf").innerHTML = "Balance: " + balance;
-          });
+    function getBalanceOf(){
+		ethereum.enable().then(function(){
+			web3.eth.getAccounts().then(function(accounts) {
+            var contractAddress = "0x5F40A25664FEc9f687d456c1aEDCA290F99406A8"; 
+            var contract = new web3.eth.Contract(minABI, contractAddress);
+            contract.methods.balanceOf(accounts[0]).call().then(function(balance) {
+                document.getElementById("balanceOf").innerHTML = "Balance: " + balance;
+            });
         });
-        }
+		})
+           
+    }
 
 
 
