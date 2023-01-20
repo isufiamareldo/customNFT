@@ -3,8 +3,18 @@
       <script src="https://cdn.jsdelivr.net/npm/web3@1.2.6/dist/web3.min.js"></script>
     </head>
     <body>
-      <button onclick="getBlockNumber()">Get Block Number</button>
-      <p id="blockNumber"></p>
+        <section>
+            <h4>Excercise 1</h4>
+            <button onclick="getBlockNumber()">Get Block Number</button>
+            <p id="blockNumber"></p> 
+        </section>
+          <section>
+            <h4>Excercise 2</h4>
+            <button onclick="getBalanceOf()">Get Balance</button>
+            <p id="balanceOf"></p>
+          </section>
+
+      
       <script>
         if (typeof web3 !== 'undefined') {
           web3 = new Web3(web3.currentProvider);
@@ -16,6 +26,34 @@
             document.getElementById("blockNumber").innerHTML = "Current Block Height: " + blockNumber;
           });
         }
+        function getBalanceOf(){
+            web3.eth.getAccounts().then(function(accounts) {
+          var contractAddress = 0x5F40A25664FEc9f687d456c1aEDCA290F99406A8; 
+          var contract = new web3.eth.Contract(minABI, contractAddress);
+          contract.methods.balanceOf(accounts[0]).call().then(function(balance) {
+            document.getElementById("balanceOf").innerHTML = "Balance: " + balance;
+          });
+        });
+        }
+
+
+
+      
+const minABI = [  
+    // balanceOf
+    {    
+        constant: true,
+
+        inputs: [{ name: "_owner", type: "address" }],
+
+        name: "balanceOf",
+
+        outputs: [{ name: "balance", type: "uint256" }],
+
+        type: "function",
+    },
+
+    ];
       </script>
     </body>
   </html>
