@@ -4,16 +4,16 @@
     </head>
     <body>
       <button onclick="getBlockNumber()">Get Block Number</button>
-      <p id="blockNumber">Number: </p>
+      <p id="blockNumber"></p>
       <script>
         if (typeof web3 !== 'undefined') {
           web3 = new Web3(web3.currentProvider);
         } else {
-          alert("Please install MetaMask to use this feature.");
+          alert("MetaMask not installed");
         }
         function getBlockNumber() {
           web3.eth.getBlockNumber().then(function(blockNumber) {
-            document.getElementById("blockNumber").innerHTML = "Block Number: " + blockNumber;
+            document.getElementById("blockNumber").innerHTML = "Current Block Height: " + blockNumber;
           });
         }
       </script>
