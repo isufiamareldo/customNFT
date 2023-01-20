@@ -31,6 +31,7 @@
 
 
         const minABI = 
+        [
         {
 		"inputs": [
 			{
@@ -49,7 +50,7 @@
 		],
 		"stateMutability": "view",
 		"type": "function"
-	};
+	}];
 
         function getBalanceOf(){
             web3.eth.getAccounts().then(function(accounts) {
